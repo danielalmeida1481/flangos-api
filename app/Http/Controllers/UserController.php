@@ -15,18 +15,16 @@ class UserController extends Controller
      * @param int $id
      * @return \App\Models\User
      */
-    public function user(Request $request, $id = null) {
+    public function get(Request $request, $id = null) {
         if (!$id) {
             return response(
-                User::query()
-                ->whereId($request->user()->id)
-                ->first(['name', 'email'])
+                User::whereId($request->user()->id)
+                    ->first(['name', 'email'])
             , 200);
         }
 
-        $user = User::query()
-        ->whereId($id)
-        ->first(['name', 'email']);
+        $user = User::whereId($id)
+            ->first(['name', 'email']);
 
         if (!$user) {
             return response([], 404);
