@@ -62,12 +62,12 @@ class CategoryController extends Controller
             ], 422);
         }
 
-        Category::create([
+        $category = Category::create([
             'name' => $validated['name'],
             'user_id' => $request->user()->id
         ]);
 
-        return response(['message' => "Category created successfully."], 200);
+        return response(['message' => "Category created successfully.", 'category' => $category], 200);
     }
 
 }

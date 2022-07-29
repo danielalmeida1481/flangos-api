@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,12 +19,19 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::prefix('user')->group(function () {
-        Route::get('/{id?}', [UserController::class, 'user']);
+        Route::get('/{id?}', [UserController::class, 'get']);
     });
 
     Route::prefix('category')->group(function () {
-        Route::post('/', [CategoryController::class, 'store']);
         Route::get('/{id?}', [CategoryController::class, 'get']);
+        Route::post('/', [CategoryController::class, 'store']);
+    });
+
+    Route::prefix('exercise')->group(function () {
+        Route::get('/{id?}', [ExerciseController::class, 'get']);
+        Route::post('/', [ExerciseController::class, 'store']);
+        Route::put('/{id}', [ExerciseController::class, 'update']);
+        Route::delete('/{id}', [ExerciseController::class, 'delete']);
     });
 
 

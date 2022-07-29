@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class Exercise extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -17,15 +17,17 @@ class Category extends Model
      */
     protected $fillable = [
         'name',
+        'category_id',
         'user_id'
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function exercises() {
-        return $this->hasMany(Exercise::class);
     }
 }
