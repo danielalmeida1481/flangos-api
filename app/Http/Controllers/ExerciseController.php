@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\CategoryTrait;
 use App\Models\Category;
 use App\Models\Exercise;
 use Illuminate\Http\Request;
 
 class ExerciseController extends Controller
 {
+    use CategoryTrait;
 
     /**
      * Get exercises
@@ -192,15 +194,7 @@ class ExerciseController extends Controller
          * Delete of category if exercises count === 0
          */
         if ($oldCategoryId) {
-            $categoryExercisesCount = Category::whereId($oldCategoryId)
-            ->withCount('exercises')
-            ->first()
-            ->exercises_count;
-
-            if ($categoryExercisesCount === 0) {
-                Category::whereId($oldCategoryId)
-                    ->delete();
-            }
+            $this->deleteCategoryIfZeroExercises($oldCategoryId);
         }
 
         return response(['message' => "Exercise updated successfully."], 200);
@@ -227,17 +221,10 @@ class ExerciseController extends Controller
 
         $exercise->delete();
         if ($exercise->category) {
-            $categoryExercisesCount = Category::whereId($exercise->category->id)
-                ->withCount('exercises')
-                ->first()
-                ->exercises_count;
-
-            if ($categoryExercisesCount === 0) {
-                Category::whereId($exercise->category->id)
-                    ->delete();
-            }
+            $this->deleteCategoryIfZeroExercises($exercise->category->id);
         }
 
         return response(['message' => "Exercise deleted successfully."], 200);
     }
+
 }
