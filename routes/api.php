@@ -22,12 +22,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{id?}', [UserController::class, 'get']);
     });
 
-    Route::prefix('category')->group(function () {
+    Route::prefix('categories')->group(function () {
         Route::get('/{id?}', [CategoryController::class, 'get']);
         Route::post('/', [CategoryController::class, 'store']);
     });
 
-    Route::prefix('exercise')->group(function () {
+    Route::prefix('exercises')->group(function () {
         Route::get('/{id?}', [ExerciseController::class, 'get']);
         Route::post('/', [ExerciseController::class, 'store']);
         Route::put('/{id}', [ExerciseController::class, 'update']);
